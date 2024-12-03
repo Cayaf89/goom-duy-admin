@@ -15,21 +15,22 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('short_name')->nullable();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->string('icon')->nullable();
             $table->timestamps();
         });
 
         Schema::create('effects_statistics', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('effect_id')->constrained();
-            $table->foreignId('statistic_id')->constrained();
+            $table->foreignId('effect_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('statistic_id')->constrained()->cascadeOnDelete();
+            $table->float('value');
         });
 
         Schema::create('effects_attributes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('effect_id')->constrained();
-            $table->foreignId('attribute_id')->constrained();
+            $table->foreignId('effect_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('attribute_id')->constrained()->cascadeOnDelete();
         });
     }
 
@@ -38,8 +39,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('effects');
         Schema::dropIfExists('effects_statistics');
         Schema::dropIfExists('effects_attributes');
+        Schema::dropIfExists('effects');
     }
 };

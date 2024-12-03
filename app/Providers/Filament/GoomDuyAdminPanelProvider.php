@@ -20,6 +20,9 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class GoomDuyAdminPanelProvider extends PanelProvider
 {
+    /**
+     * @throws \Exception
+     */
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -28,6 +31,7 @@ class GoomDuyAdminPanelProvider extends PanelProvider
             ->path('admin')
             ->brandName("Goom Duy 2D Admin")
             ->login()
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -54,6 +58,16 @@ class GoomDuyAdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->plugins([
+                \Awcodes\Curator\CuratorPlugin::make()
+                    ->label('Media')
+                    ->pluralLabel('Media')
+                    ->navigationIcon('heroicon-o-photo')
+                    ->navigationSort(2)
+                    ->navigationCountBadge()
+                    ->registerNavigation(true)
+                    ->defaultListView('grid')
             ]);
     }
 }

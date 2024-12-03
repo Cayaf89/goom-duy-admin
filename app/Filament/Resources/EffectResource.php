@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\EffectResource\Pages;
 use App\Filament\Resources\EffectResource\RelationManagers;
 use App\Models\Effect;
+use Awcodes\Curator\Components\Forms\CuratorPicker;
+use Awcodes\Curator\Components\Tables\CuratorColumn;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -17,20 +19,40 @@ class EffectResource extends Resource
 {
     protected static ?string $model = Effect::class;
 
+    protected static ?string $label = "Effet";
+    protected static ?string $pluralLabel = "Effets";
+    protected static ?string $navigationLabel = "Effets";
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = "Goom Duy 2D";
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('short_name')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('description')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('icon')
-                    ->maxLength(255),
+                Forms\Components\Grid::make(3)
+                    ->schema([
+                        Forms\Components\Grid::make(1)
+                            ->columnSpan(1)
+                            ->schema([
+                                CuratorPicker::make('icon_id')
+                                    ->relationship('icon', 'id')
+                                    ->directory('effects'),
+                            ]),
+                        Forms\Components\Grid::make(1)
+                            ->columnSpan(2)
+                            ->schema([
+                                Forms\Components\TextInput::make('name')
+                                    ->maxLength(255)
+                                    ->required(),
+                                Forms\Components\TextInput::make('short_name')
+                                    ->maxLength(255),
+                                Forms\Components\Textarea::make('description')
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('prefab_name')
+                                    ->maxLength(255),
+                            ]),
+                    ]),
             ]);
     }
 
@@ -38,13 +60,16 @@ class EffectResource extends Resource
     {
         return $table
             ->columns([
+
+                CuratorColumn::make('icon')
+                    ->size(40),
                 Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('prefab_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('short_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('icon')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

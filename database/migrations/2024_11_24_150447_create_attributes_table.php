@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('short_name')->nullable();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->string('icon')->nullable();
             $table->float('min_value')->default(0);
             $table->foreignId('max_value_statistic_id')

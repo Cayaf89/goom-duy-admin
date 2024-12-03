@@ -21,13 +21,26 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string|null $icon
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property Collection|Class[] $classes
  * @property Collection|Attribute[] $attributes
  * @property Collection|Statistic[] $statistics
  * @property Collection|Weapon[] $weapons
- *
  * @package App\Models
+ * @property-read int|null $attributes_count
+ * @property-read int|null $classes_count
+ * @property-read int|null $statistics_count
+ * @property-read int|null $weapons_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Effect newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Effect newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Effect query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Effect whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Effect whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Effect whereIcon($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Effect whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Effect whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Effect whereShortName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Effect whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Effect extends Model
 {

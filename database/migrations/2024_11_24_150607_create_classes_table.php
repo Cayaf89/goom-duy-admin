@@ -14,27 +14,27 @@ return new class extends Migration
         Schema::create('classes', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->string('icon')->nullable();
             $table->timestamps();
         });
 
         Schema::create('classes_statistics', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('class_id')->constrained();
-            $table->foreignId('statistic_id')->constrained();
+            $table->foreignId('classe_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('statistic_id')->constrained()->cascadeOnDelete();
         });
 
         Schema::create('classes_attributes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('class_id')->constrained();
-            $table->foreignId('attribute_id')->constrained();
+            $table->foreignId('classe_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('attribute_id')->constrained()->cascadeOnDelete();
         });
 
-        Schema::create('classes_effects', function (Blueprint $table) {
+        Schema::create('classes_weapons', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('class_id')->constrained();
-            $table->foreignId('effect_id')->constrained();
+            $table->foreignId('classe_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('weapon_id')->constrained()->cascadeOnDelete();
         });
     }
 
@@ -43,9 +43,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('classes');
         Schema::dropIfExists('classes_statistics');
         Schema::dropIfExists('classes_attributes');
         Schema::dropIfExists('classes_effects');
+        Schema::dropIfExists('classes');
     }
 };
